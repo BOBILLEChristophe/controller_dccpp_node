@@ -37,8 +37,8 @@ Controller HTML and JavaScript for DCC++
       <p class="text-justify">Précisions importantes : <strong>L'utilisation de DCC++_WebController est libre et gratuite.</strong> Ce développement fait l'objet d'un copyright sous licence publique générale GNU v3. Pour plus de détails, voir les entêtes des fichiers HTML et JavaScript.</p>
       <p class="text-justify">&nbsp;</p>
       
-    <div class="col-md-6"><img src="img/interface_1.png" width="600" height="441"></div>
-    <div class="col-md-6"><img src="img/sur_smartphone.jpg" width="250"></div>
+    <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/interface_1.png" width="600" height="441">
+    <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/sur_smartphone.jpg" width="250">
   </div>
 
 </div>
