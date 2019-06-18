@@ -1,0 +1,296 @@
+<!--  
+//   Controller DCC++ permet de commander de logiciel DCC++ BASE STATION de Gregg E. Berman COPYRIGHT (c) 2013-2016
+
+//   (©) 2016-2017 - Christophe BOBILLE
+//   Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier
+//	 au titre des clauses de la Licence Publique Générale GNU, telle que publiée
+//   par la Free Software Foundation ; soit la version 3 de la Licence, 
+//   ou (à votre discrétion) une version ultérieure quelconque.
+
+//   Ce programme est distribué dans l'espoir qu'il sera utile,
+//   mais SANS AUCUNE GARANTIE ; sans même une garantie implicite de
+//   COMMERCIABILITE ou DE CONFORMITE A UNE UTILISATION PARTICULIERE.
+//   Voir la Licence Publique Générale GNU pour plus de détails.
+//   Vous devriez avoir reçu un exemplaire de la Licence Publique Générale
+//   GNU avec ce programme ; si ce n'est pas le cas, voyez http://www.gnu.org/licenses
+
+
+//   This program is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+
+//   You should have received a copy of the GNU General Public License
+//   along with this program.  If not, see http://www.gnu.org/licenses
+//   GNU General Public License:  http://opensource.org/licenses/GPL-3.0
+
+
+
+//********* Controller DCC++
+//***** v 2.2 			- le 06/09/2016 à 19:03:00
+//***** v 2.3 			- le 27/12/2016 à 09:38:00
+//***** v 2.4 (release) - le 29/01/2017 à 01:23:00
+//***** v 2.5 (release) - le 29/01/2017 à 09:15:00
+//***** v 2.6 (release) - le 29/01/2017 à 13:56:00
+// 				1° - Ajout d'une fenêtre de confirmation pour annuler la lecture de CV's en cas de problème.
+//     			Message reçu de DCC++ Base Station de type "<r123|123|1 -1>" avec -1 en fin.
+// 				2° - Arret de la loco si tentative de modifier la CV 1 (adresse) sur la voie principale alors
+//      		que la vitesse est > 0.
+//***** v 2.7 (release) - le 30/01/2017 à 12:29:00
+// 				1° - Ajout de fonctionnalités concernant la gestion des CV's comme l'ajout automatique des noms et labels
+// 				2° - Ajout du n° de version en haut de page
+// 				3° - Ajout d'une zone rétractable de paramètrage en haut de page
+// 				4° - Ajout d'options dans cette zone
+//      			* Selection de l'adresse IP de l'Arduino supportant DCC++ Base Station par menu déroulant.
+// 					* Choix du nombre de CV's à lire par menu déroulant.
+//					* Ajout de plusieurs fonctions liées aux sauvegardes
+// 				5° La zone "Noms pour les fonctions :" dans les paramètrages de foncions à été rendue rétractable
+//***** v 2.8 (release) - le 02/02/2017 à 19:52:00
+//				Ajout de "dccpp" dans les URL's des requêtes destinées à DCC++ Base Station pour être compatible
+//***** v 2.8.1 (release) - le 04/02/2017 à 21:23:00
+// 				Ajout d'un objet manufacturers contenant les informations relatives au fabricants de décodeurs
+//				Ajout d'un objet cvLabels contenant les informations relatives aux labels des CV's
+//				********  ATTENTION ******** Le fichier "data.json" a été renommé "locos.json"
+//				et se touve maintenant placés dans le répertoire "config".
+//***** v 2.8.2 à 2.8.5 (release) - le 21/02/2017 à 08:47:00
+//				Nombreuses évolutions liées à la lecture des cv's et à leur programmation
+//***** v 3.0 R1 BETA - le 22/02/2017 à 18:21:00 Version on-line démo
+//***** v 3.0.1 R1 BETA - le 02/11/2017 à 10:02:00 Version desktop et serveur full
+//***** v 4.0 R5 BETA (Version pour Node.js) - le 07/11/2017 à 08:10:00
+//
+//		Cette version permet de communiquer par TCP avec DCC++ via un serveur Node.js
+//      Elle permet de piloter la carte Arduino (DCC++ BaseStation) via le port série ou ethernet.
+//		Dans le première cas, les fonctions de lecture de CV's ne sont pas disponibles.
+//      Configuration requise :
+//      -  NodeJs : dccpp_node.js
+//      -  Liaison série USB : Arduino Uno ou Mega
+//      -  Liaison ethernet : Arduino Mega + shield ethernet
+//      -  DCC++ BaseStation version originale DCCpp_Uno : https://github.com/DccPlusPlus/BaseStation
+//		-  Arduino Motor Shield ou Pololu Dual MC33926 Motor Shield
+//
+//      Documentation DCC++ : https://github.com/DccPlusPlus/BaseStation/wiki/Getting-Started-With-DCC---Hardware
+//
+//***** v 4.1 (release) (Version pour Node.js) - le 22/11/2017 à 17:31:00
+//      		Correction de bugs
+//      		Ajout du Full Screen
+//      		Version sm pour tablettes et smartphones
+//      		Sauvegarde de paramétres sur disque via Node.js
+//
+//***** v 4.2 (release) (Version pour Node.js) - le 27/11/2017 à 19:32:00
+//      		Correction de bugs sur serialPort
+//      		Améliorations sur la version smartphone
+//      		Affichage d'informations supplémentaires dans le terminal
+//			
+//*************************************************************************************************************************** 
+
+-->				
+
+
+<!doctype html>
+<html ng-app="trainsApp">
+<head>
+<link href="img/icon.jpg" rel="shortcut icon" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Scripts de l'application -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script type="text/javascript" src="./scripts/controller_4.2_sm.js"></script>
+<script src="../socket.io/socket.io.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/w3css/w3.css">
+<link rel="stylesheet" href="./css/style.css">
+<title>My controller DCC++</title>
+<style>
+.col-sm-2 {
+	display: inline-block
+}
+;
+</style>
+</head>
+
+<body ng-controller="pilotLocosCtrl">
+<div class="container-fluid">
+  <div class="spacer_20"></div>
+  <locos>
+    <div class="col-sm-2" ng-repeat="el in locomotives">
+      <div ng-click="selectionLoco(el)"> <img ng-src="{{ el.urlImg }}" class="image_shadow_icons clickable" alt="img_loco" width="58" height="34"></div>
+    </div>
+  </locos>
+  <div class="border_20 spacer_20"></div>
+  <form id="form1">
+    <table width="100%">
+      <tr>
+        <td><button type="button" id="btn_eStop" class="glyphicon glyphicon-alert btn btn-default typoYellow"></button></td>
+        <td><button id="btn_power" type="button" ng-class="{'glyphicon glyphicon-off btn btn-default typoGreen': powerStatus == '0', 'glyphicon glyphicon-off btn btn-default typoRed': powerStatus == '1' }" title="Alimentation"></button></td>
+        <td>{{ responseServer }}</td>
+      </tr>
+      <tr>
+        <td width="20%"><button id="btn_stop" type="button" class="glyphicon glyphicon-stop btn btn-default" ng-click="stopLoco()"></button></td>
+        <td width="20%"><button type="button" id="btn_AR" class="glyphicon glyphicon-arrow-left btn btn-default" ng-class="{'typoGreen': locoSelectionnee.sens == '0' }" ng-click="goAr()"></button></td>
+        <td width="20%"><button type="button" id="btn_AV" class="glyphicon glyphicon-arrow-right btn btn-default" ng-class="{'typoGreen': locoSelectionnee.sens == '1' }" ng-click="goAv()"></button></td>
+      </tr>
+    </table>
+    <div class="spacer_20"></div>
+    <table>
+      <tr>
+        <td colspan="2"><input id="speedSlider" type="range" min="0" max="126" ng-model="locoSelectionnee.vitesse" ng-change="setTraction()"/></td>
+        <td>{{ locoSelectionnee.vitesse }}</td>
+      </tr>
+    </table>
+    <div class="border_20 spacer_20"></div>
+    <div ng-if="locoSelectionnee.btn_fn_label[4] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[4]" ng-click="setFn(0, 1, 2, 3, 4)">
+        - {{ locoSelectionnee.btn_fn_label[4] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[0] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[0]" ng-click="setFn(0, 1, 2, 3, 4)">
+        - {{ locoSelectionnee.btn_fn_label[0] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[1] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[1]" ng-click="setFn(0, 1, 2, 3, 4)">
+        - {{ locoSelectionnee.btn_fn_label[1] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[2] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[2]" ng-click="setFn(0, 1, 2, 3, 4)">
+        - {{ locoSelectionnee.btn_fn_label[2] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[3] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[3]" ng-click="setFn(0, 1, 2, 3, 4)">
+        - {{ locoSelectionnee.btn_fn_label[3] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[5] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[5]" ng-click="setFn(5, 6, 7, 8)">
+        - {{ locoSelectionnee.btn_fn_label[5] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[6] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[6]" ng-click="setFn(5, 6, 7, 8)">
+        - {{ locoSelectionnee.btn_fn_label[6] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[7] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[7]" ng-click="setFn(5, 6, 7, 8)">
+        - {{ locoSelectionnee.btn_fn_label[7] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[8] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[8]" ng-click="setFn(5, 6, 7, 8)">
+        - {{ locoSelectionnee.btn_fn_label[8] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[9] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[9]" ng-click="setFn(9, 10, 11, 12)">
+        - {{ locoSelectionnee.btn_fn_label[9] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[10] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[10]" ng-click="setFn(9, 10, 11, 12)">
+        - {{ locoSelectionnee.btn_fn_label[10] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[11] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[11]" ng-click="setFn(9, 10, 11, 12)">
+        - {{ locoSelectionnee.btn_fn_label[11] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[12] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[12]" ng-click="setFn(9, 10, 11, 12)">
+        - {{ locoSelectionnee.btn_fn_label[12] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[13] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[13]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[13] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[14] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[14]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[14] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[15] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[15]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[15] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[16] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[16]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[16] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[17] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[17]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[17] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[18] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[18]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[18] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[19] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[19]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[19] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[20] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[20]" ng-click="setFn(13, 14, 15, 16, 17, 18, 19, 20)">
+        - {{ locoSelectionnee.btn_fn_label[20] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[21] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[21]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[21] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[22] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[22]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[22] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[23] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[23]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[23] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[24] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[24]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[24] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[25] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[25]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[25] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[26] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[26]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[26] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[27] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[27]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[27] }}</label>
+    </div>
+    <div ng-if="locoSelectionnee.btn_fn_label[28] != ''">
+      <label>
+        <input type="checkbox" ng-model="locoSelectionnee.btn_fn[28]" ng-click="setFn(21, 22, 23, 24, 25, 26, 27, 28)">
+        - {{ locoSelectionnee.btn_fn_label[28] }}</label>
+    </div>
+  </form>
+</div>
+<!--container-->
+</body>
+</html>
