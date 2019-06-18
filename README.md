@@ -14,6 +14,8 @@ Controller HTML and JavaScript for DCC++
 <link rel="stylesheet" href="./style/css.css">
 </head>
 <body>
+  
+    <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/interface.png" width="600" height="441"> 
 <div class="jumbotron">
   <div class="container">
     <h3><img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/logo.png" width="100">   DCC++<span class="text-justify">_WebController</span></h3>
@@ -44,7 +46,5 @@ Controller HTML and JavaScript for DCC++
 
 </div>
 <!-- /container -->
-    <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/interface.png" width="600" height="441">
-    <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/sur_smartphone.jpg" width="250"> 
 </body>
 </html>
