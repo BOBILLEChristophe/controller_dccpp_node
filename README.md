@@ -2,7 +2,18 @@
 Controller HTML and JavaScript for DCC++
 
 
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="./img/icon.jpg" rel="shortcut icon" />
+<title>My DCC++ Controller Ethernet</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./style/css.css">
+</head>
 <body>
 <div class="jumbotron">
   <div class="container">
@@ -27,8 +38,6 @@ Controller HTML and JavaScript for DCC++
       <p class="text-justify">Précisions importantes : <strong>L'utilisation de DCC++_WebController est libre et gratuite.</strong> Ce développement fait l'objet d'un copyright sous licence publique générale GNU v3. Pour plus de détails, voir les entêtes des fichiers HTML et JavaScript.</p>
       <p class="text-justify">&nbsp;</p>
       
-    </div>
-    
     <div class="col-md-6"><img src="img/interface_1.png" width="600" height="441"></div>
     <div class="col-md-6"><img src="img/sur_smartphone.jpg" width="250"></div>
   </div>
