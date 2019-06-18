@@ -31,7 +31,7 @@ Controller HTML and JavaScript for DCC++
          <a href="http://www.locoduino.org/spip.php?article182">http://www.locoduino.org/spip.php?article182</a></p>
       <p class="text-justify"><strong>DCC++_WebController</strong> tire profit de tout le potentiel de <strong>DCC++ Base Station</strong> comme l'accès à 28 fonctions programmables ou les adresses étendues.</p>
       <p class="text-justify">L'application peut fonctionner avec un <strong>Arduino Uno</strong> en liaison avec le port série. Cela permet de disposer d'une centrale DCC avec son logiciel de commande très complet pour moins de 20 €. </p>
-      <p class="text-justify">Il est cependant conseillé d'utiliser un <strong>Arduino Mega</strong> disposant d'un <strong>shield ethernet</strong>. Dans cette configuration, l'investissement matériel reste la encore très faible</p>
+      <p class="text-justify">Il est cependant conseillé d'utiliser un <strong>Arduino Mega</strong> disposant d'un <strong>shield ethernet</strong>. Dans cette configuration, l'investissement matériel reste là encore très faible</p>
       <p class="text-justify">Pour plus de détails sur les configurations matérielles : </p>
       <p class="text-justify"><a href="http://www.locoduino.org/spip.php?article185">http://www.locoduino.org/spip.php?article185</a></p>
       <p class="text-justify"><a href="http://www.locoduino.org/spip.php?article187">http://www.locoduino.org/spip.php?article187</a></p>
