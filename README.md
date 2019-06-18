@@ -26,7 +26,7 @@ Controller HTML and JavaScript for DCC++
       <p class="text-justify">Pour accroître le plaisir de jeu, il est possible d'utiliser plusieurs périphériques sur un même réseau domestique, ordinateurs ou tablettes.</p>
       <p class="text-justify">Précisions importantes : <strong>L'utilisation de DCC++_WebController est libre et gratuite.</strong> Ce développement fait l'objet d'un copyright sous licence publique générale GNU v3. Pour plus de détails, voir les entêtes des fichiers HTML et JavaScript.</p>
       <p class="text-justify">&nbsp;</p>
-      <p class="text-justify">Téléchargement : <a href="http://185.14.178.233/locoduino/dccpp_WebController/controller_dccpp_node_4.2.zip"><img src="img/zip-2e4e6.png" width="52" height="52"></a></p>
+      
     </div>
     
     <div class="col-md-6"><img src="img/interface_1.png" width="600" height="441"></div>
