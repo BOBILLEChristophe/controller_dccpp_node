@@ -40,8 +40,6 @@ Controller HTML and JavaScript for DCC++
       <p class="text-justify">&nbsp;</p>
       
     
-    
-    
   <!-- </div> --> 
 
 </div>
