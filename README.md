@@ -16,7 +16,7 @@ Controller HTML and JavaScript for DCC++
 <body>
 <div class="jumbotron">
   <div class="container">
-    <h3><img src="img/logo.png" width="100">   DCC++<span class="text-justify">_WebController</span></h3>
+    <h3><img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/logo.png" width="100">   DCC++<span class="text-justify">_WebController</span></h3>
   </div>
 </div>
 <div class="container">
