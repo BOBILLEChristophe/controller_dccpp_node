@@ -39,7 +39,9 @@ Controller HTML and JavaScript for DCC++
       
     <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/interface_1.png" width="600" height="441">
     <img src="http://alkans.fr/locoduino/controller_dccpp/dccppController/img/sur_smartphone.jpg" width="250">
-  </div>
+    
+    
+  <!-- </div> --> 
 
 </div>
 <!-- /container --> 
