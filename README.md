@@ -38,7 +38,7 @@ Controller HTML and JavaScript for DCC++
       <p class="text-justify">Pour accroître le plaisir de jeu, il est possible d'utiliser plusieurs périphériques sur un même réseau domestique, ordinateurs ou tablettes.</p>
       <p class="text-justify">Précisions importantes : <strong>L'utilisation de DCC++_WebController est libre et gratuite.</strong> Ce développement fait l'objet d'un copyright sous licence publique générale GNU v3. Pour plus de détails, voir les entêtes des fichiers HTML et JavaScript.</p>
       <p class="text-justify">&nbsp;</p>
-      La documentation est disponible <a href="http://alkans.fr/locoduino/controller_dccpp/dccppController/index.php"  target="_blanck">sur ce lien.</a>  
+      La documentation est disponible <a href="http://alkans.fr/locoduino/controller_dccpp/dccppController/index.php" target="_blank">sur ce lien.</a>  
       <p class="text-justify">&nbsp;</p>
       
     
